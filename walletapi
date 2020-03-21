@@ -1,0 +1,15 @@
+[GIN-debug] POST   /channels                 --> tospay.com/WalletRestAPI/api/controllers.(*Server).CreateChannel-fm (5 handlers)
+[GIN-debug] GET    /GetChannels              --> tospay.com/WalletRestAPI/api/controllers.(*Server).GetChannels-fm (4 handlers)
+[GIN-debug] POST   /customers/create         --> tospay.com/WalletRestAPI/api/controllers.(*Server).CreateCustomer-fm (5 handlers)
+[GIN-debug] GET    /customers/get            --> tospay.com/WalletRestAPI/api/controllers.(*Server).GetCustomers-fm (5 handlers)
+[GIN-debug] GET    /customers/get/:accountno --> tospay.com/WalletRestAPI/api/controllers.(*Server).GetCustomer-fm (5 handlers)
+[GIN-debug] PUT    /customers/update/:id     --> tospay.com/WalletRestAPI/api/controllers.(*Server).UpdateCustomer-fm (5 handlers)
+[GIN-debug] POST   /transactions             --> tospay.com/WalletRestAPI/api/controllers.(*Server).IncomingRequest-fm (5 handlers)
+time="2020-03-21T11:46:54+03:00" level=info client_ip="::1" latency_time=26.9828ms req_method=POST req_uri=/customers/create status_code=201
+time="2020-03-21T11:47:19+03:00" level=info client_ip="::1" latency_time=38.9798ms req_method=POST req_uri=/transactions status_code=200
+time="2020-03-21T11:47:45+03:00" level=info client_ip="::1" latency_time=111.9359ms req_method=POST req_uri=/transactions status_code=200
+time="2020-03-21T11:48:05+03:00" level=info client_ip="::1" latency_time=13.9905ms req_method=POST req_uri=/transactions status_code=500
+time="2020-03-21T11:48:13+03:00" level=info client_ip="::1" latency_time=106.9382ms req_method=POST req_uri=/transactions status_code=200
+time="2020-03-21T11:48:25+03:00" level=info client_ip="::1" latency_time=7.0024ms req_method=POST req_uri=/transactions status_code=500
+time="2020-03-21T11:48:33+03:00" level=info client_ip="::1" latency_time=99.9438ms req_method=POST req_uri=/transactions status_code=200
+time="2020-03-21T11:49:04+03:00" level=info client_ip="::1" latency_time=65.9542ms req_method=POST req_uri=/transactions status_code=200

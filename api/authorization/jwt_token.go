@@ -17,13 +17,13 @@ func CreateToken(channel string) (string, error) {
 	claims := jwt.MapClaims{}
 	claims["authorized"] = true
 	claims["user_id"] = channel
-	claims["exp"] = time.Now().Add(time.Hour * 24).Unix() //Token expires after 1 hour
+	claims["exp"] = time.Now().Add(time.Hour * 24).Unix() //Token expires after 24 hours
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(os.Getenv("API_SECRET")))
 
 }
 
-//TokenValid validate the token passed in the coming request
+//TokenValid validates the token passed in the coming request
 func TokenValid(c *gin.Context) error {
 	tokenString := ExtractToken(c)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -43,7 +43,6 @@ func TokenValid(c *gin.Context) error {
 
 //ExtractToken gets the token from the incoming request Header
 func ExtractToken(c *gin.Context) string {
-	//keys := c.Query("lastname")
 	token := c.Query("token") //if token is passed in the url query params
 	if token != "" {
 		return token
@@ -56,7 +55,7 @@ func ExtractToken(c *gin.Context) string {
 	return ""
 }
 
-//ExtractTokenID gets the id of the token. In this cas, it the channel passed in the claims during creation
+//ExtractTokenID gets the id of the token. In this case, is the channel passed in the claims during creation
 func ExtractTokenID(c *gin.Context) (string, error) {
 
 	tokenString := ExtractToken(c)
@@ -80,7 +79,7 @@ func ExtractTokenID(c *gin.Context) (string, error) {
 	return "", nil
 }
 
-//Pretty display the claims licely in the terminal
+//Pretty display the claims nicely in the terminal
 func Pretty(data interface{}) {
 	b, err := json.MarshalIndent(data, "", " ")
 	if err != nil {

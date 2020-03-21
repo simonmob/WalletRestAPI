@@ -8,17 +8,15 @@ import (
 //initializeRoutes initializes routes for incoming Requests
 func (s *Server) initializeRoutes() {
 
-	//Add logger middleware
-	s.Router.Use(middlewares.SetMiddlewareJSON())
-	s.Router.Use(middlewares.SetMiddlewareLogger())
-	s.Router.Use(gin.Recovery())
+	s.Router.Use(middlewares.SetMiddlewareJSON())   //adds json content type on request
+	s.Router.Use(middlewares.SetMiddlewareLogger()) //Add logger middleware
+	s.Router.Use(gin.Recovery())                    //recovers from crashes
 
 	// Home Route
 	s.Router.GET("/", s.Home)
 
 	// Channel authorization routes
 	s.Router.POST("/channelAuth", s.ChannelAuth)
-	//s.Router.HandleFunc("/login", middlewares.SetMiddlewareJSON(s.Login)).Methods("POST")
 
 	//channel routes
 	//channelsGroup := s.Router.Group("/channels")
@@ -27,7 +25,7 @@ func (s *Server) initializeRoutes() {
 
 	//Customer routes
 	customersGroup := s.Router.Group("/customers")
-	customersGroup.Use(middlewares.SetMiddlewareAuthentication())
+	customersGroup.Use(middlewares.SetMiddlewareAuthentication()) //must be authenticated.
 	{
 		customersGroup.POST("/create", s.CreateCustomer)
 		customersGroup.GET("/get", s.GetCustomers)

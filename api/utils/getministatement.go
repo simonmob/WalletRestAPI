@@ -12,7 +12,11 @@ import (
 func GetMinistatement(tx *gorm.DB, requestCreated *models.TransactionRequests) (responses.TransactionResponse, error) {
 	//first get Balance of the DebitAccount
 	response := responses.TransactionResponse{}
-	transaction := models.Transactions{}
+	account := models.Accounts{}
+	err := tx.Debug().Model(&models.Accounts{}).Where("account_no = ?", requestCreated.DebitAccount).Take(&account).Error
+	if err != nil {
+		return responses.TransactionResponse{}, err
+	}
 	//DATETIME|TRANTYPE|TRANAMNT|DRCR"
 	rows, err := tx.Debug().Model(&models.Transactions{}).Limit(5).Select("created_at,narration,amount,dr_cr").Order("id desc").Where("account_no = ?", requestCreated.DebitAccount).Rows()
 	if err != nil {
@@ -33,8 +37,8 @@ func GetMinistatement(tx *gorm.DB, requestCreated *models.TransactionRequests) (
 	response.Reference = requestCreated.TxnRef
 	amt, _ := strconv.ParseFloat("0.00", 64)
 	response.Amount = amt
-	response.Account = transaction.AccountNo
-	bal, _ := strconv.ParseFloat(transaction.AvailableBal, 64)
+	response.Account = account.AccountNo
+	bal, _ := strconv.ParseFloat(account.AvailableBal, 64)
 	response.AvailableBalance = bal
 	response.Ministatement = minis
 

@@ -112,7 +112,6 @@ func (c *Customer) SaveCustomer(db *gorm.DB) (*Customer, error) {
 		}
 	}
 	tx.Commit()
-
 	//End of customer creation transaction
 	return c, nil
 }
@@ -135,12 +134,6 @@ func (c *Customer) FindCustomerByAccount(db *gorm.DB, account string) (*Customer
 	if err != nil {
 		return &Customer{}, err
 	}
-	// if c.AccountNo != "" {
-	// 	err = db.Debug().Model(&Customer{}).Where("account_no = ?", c.AccountNo).Take(&c.FirstName).Error
-	// 	if err != nil {
-	// 		return &Customer{}, err
-	// 	}
-	// }
 	return c, nil
 }
 

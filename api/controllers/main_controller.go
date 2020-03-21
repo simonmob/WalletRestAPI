@@ -42,11 +42,11 @@ func (server *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, D
 	server.Configs.CashAccount = CashAccount
 
 	server.Router = gin.New()
-	server.initializeRoutes()
+	server.initializeRoutes() //initializes all routes created in routes.go
 }
 
 //Run starta the api Listening on the given address. default is 8080
 func (server *Server) Run(addr string) {
-	fmt.Println("Listening to port " + addr)
+	fmt.Println("Listening on port " + addr)
 	log.Fatal(http.ListenAndServe(addr, server.Router))
 }

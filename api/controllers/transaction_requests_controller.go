@@ -25,7 +25,7 @@ func (server *Server) IncomingRequest(c *gin.Context) {
 	}
 
 	request := models.TransactionRequests{}
-	err = c.BindJSON(&request)
+	err = c.BindJSON(&request) //get request values
 	if err != nil {
 		responses.ERROR(c, http.StatusUnprocessableEntity, err)
 	}
@@ -38,23 +38,24 @@ func (server *Server) IncomingRequest(c *gin.Context) {
 	}
 
 	procode := request.Procode
-	//Only insert is required here. this step works like messages logger.
+	//Set the Debit and credit accounts for Cash withdrawal and Cash Deposit
 	switch procode {
-	case "010000":
+	case "010000": //Cash withdrawal
 		//1. DebitAccount = Customer Account
 		//2. CreditAccount = CashAccount
-		if request.CreditAccount == "" {
+		if request.CreditAccount == "" || request.CreditAccount != "254712345678" {
 			request.CreditAccount = server.Configs.CashAccount
 		}
 
 		break
-	case "210000":
+	case "210000": //cash Deposit
 		//1. DebitAccount = CashAccount
 		//2. CreditAccount = Customer Account
-		if request.DebitAccount == "" {
+		if request.DebitAccount == "" || request.DebitAccount != "254712345678" {
 			request.DebitAccount = server.Configs.CashAccount
 		}
 	}
+	//log the message request in DB. this step works like messages logger.
 	requestCreated, err := request.SaveTransactionRequest(server.DB)
 	if err != nil {
 		responses.ERROR(c, http.StatusInternalServerError, err)
@@ -62,8 +63,9 @@ func (server *Server) IncomingRequest(c *gin.Context) {
 	}
 
 	//start DB transaction to process incoming requests
+	//This is important to rollback changes which were recorded in DB if an error occurs.
 	tx := server.DB.Begin()
-	defer func() { //rolls back what has happened and update resposne if error occurs during the txn life cycle
+	defer func() { //rolls back what has happened and update response if error occurs during the txn life cycle
 		if r := recover(); r != nil {
 			tx.Rollback()
 			request.ResponseCode = utils.Failed
@@ -122,7 +124,7 @@ func (server *Server) IncomingRequest(c *gin.Context) {
 		responses.ERROR(c, http.StatusInternalServerError, errors.New("Processing Code not Defined"))
 		return
 	}
-	tx.Commit()
+	tx.Commit() //Commit the transaction if no error occured
 	request.ResponseCode = response.ResponseCode
 	request.Remarks = response.Remarks
 	_, _ = request.UpdateTransactionResponse(server.DB, request.TxnRef)

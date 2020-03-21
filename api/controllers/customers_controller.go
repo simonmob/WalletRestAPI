@@ -41,14 +41,9 @@ func (server *Server) CreateCustomer(c *gin.Context) {
 
 	if err != nil {
 
-		//formattedError := formaterror.FormatError(err.Error())
-
 		responses.ERROR(c, http.StatusInternalServerError, err)
 		return
 	}
-	//url := location.Get(c)
-	//c.Writer.Header().Set("Location", fmt.Sprintf("%s%s/%s", url.Host, url.Path, customerCreated.AccountNo))
-	//c.Header().Set("Location", fmt.Sprintf("%s%s/%s", c.Host, c.RequestURI, customerCreated.AccountNo))
 	responses.JSON(c, http.StatusCreated, customerCreated)
 }
 
@@ -148,7 +143,6 @@ func (server *Server) UpdateCustomer(c *gin.Context) {
 	customerUpdated, err := customerUpdate.UpdateCustomer(server.DB, customerUpdate.ID, customer.AccountNo)
 
 	if err != nil {
-		//formattedError := formaterror.FormatError(err.Error())
 		responses.ERROR(c, http.StatusInternalServerError, err)
 		return
 	}

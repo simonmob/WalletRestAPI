@@ -29,8 +29,7 @@ func (server *Server) CreateChannel(c *gin.Context) {
 		responses.ERROR(c, http.StatusInternalServerError, err)
 		return
 	}
-	//url := location.Get(c)
-	//c.Writer.Header().Set("Location", fmt.Sprintf("%s%s/%s", url.Host, url.Path, channelCreated.Channel))
+
 	responses.JSON(c, http.StatusCreated, channelCreated)
 }
 
