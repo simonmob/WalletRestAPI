@@ -135,7 +135,6 @@ API_PORT=8083
 ```
 
 ###### 5. GET - [/customers/get]() - gets a list of all customers. Limit of 100.
-
 * Response
 ```JSON
 [
@@ -199,12 +198,11 @@ API_PORT=8083
 ```
 
 ###### 8. POST - [/transactions]() - processes all transaction related requests. The transaction type is identified by the value of the supplied processing code in the request.
-a. Balance Enquiry - processing code 310000
+a. Balance Enquiry - processing code `310000`. debit account should be the account you want to request balance for.
 
-  * Request
-
-  ```JSON
-  {
+* Request
+```JSON
+{
   "msg_type":"0200",
   "pro_code":"310000",
   "channel":"USSD",
@@ -213,120 +211,118 @@ a. Balance Enquiry - processing code 310000
   "narration":"Balance Enquiry",
   "debit_account":"254708003472",
   "credit_account": ""
-  }      
-      ```
-  * Response
-  ```JSON
-      {
-          "procode": "310000",
-          "response_code": "000",
-          "remarks": "Balance Enquiry Successful",
-          "reference": "79827162829",
-          "amount": 0,
-          "account_no": "254708003472",
-          "available_bal": 0
-      }
-    ```
+}
+```
+* Response
+```JSON
+{
+  "procode": "310000",
+  "response_code": "000",
+  "remarks": "Balance Enquiry Successful",
+  "reference": "79827162829",
+  "amount": 0,
+  "account_no": "254708003472",
+  "available_bal": 0
+}
+```
 
-b. CashDeposit - processing code 210000. The cash account(254712345678) is used as the Debit account in this case.
+b. Cash Deposit - processing code `210000`. The cash account(254712345678) is used as the Debit account in this case.
 
-  * Request
-    ```JSON
-    {
-    "msg_type":"0200",
-    "pro_code":"210000",
-    "channel":"USSD",
-    "txn_ref":"79827162824",
-    "amount":"1000.50",
-    "narration":"Cash Deposit",
-    "debit_account":"254708003472",
-    "credit_account": "254708003472"
-    }      
-    ```
-  * Response
-      ```JSON
-      {
-          "procode": "210000",
-          "response_code": "000",
-          "remarks": "Cash Deposit Successful",
-          "reference": "79827162824",
-          "amount": 1000.5,
-          "account_no": "254708003472",
-          "available_bal": 1000.5
-      }
-      ```
+* Request
+```JSON
+{
+  "msg_type":"0200",
+  "pro_code":"210000",
+  "channel":"USSD",
+  "txn_ref":"79827162824",
+  "amount":"1000.50",
+  "narration":"Cash Deposit",
+  "debit_account":"254708003472",
+  "credit_account": "254708003472"
+}      
+```
+* Response
+```JSON
+{
+  "procode": "210000",
+  "response_code": "000",
+  "remarks": "Cash Deposit Successful",
+  "reference": "79827162824",
+  "amount": 1000.5,
+  "account_no": "254708003472",
+  "available_bal": 1000.5
+}
+```
 
-c. Cashwithdrawal - processing code 010000. Credit account here is the cash account (254712345678).
+c. Cash withdrawal - processing code `010000`. Credit account here is the cash account (`254712345678`).
 
-  * Request
-      ```JSON
-      {
-      	"msg_type":"0200",
-      	"pro_code":"010000",
-      	"channel":"USSD",
-      	"txn_ref":"79827162825",
-      	"amount":"200",
-      	"narration":"Cash Withdrawal",
-      	"debit_account":"254708003472",
-      	"credit_account": ""
-      }
-      ```
-  * Resposne
+* Request
+```JSON
+{
+	"msg_type":"0200",
+	"pro_code":"010000",
+	"channel":"USSD",
+	"txn_ref":"79827162825",
+	"amount":"200",
+	"narration":"Cash Withdrawal",
+	"debit_account":"254708003472",
+	"credit_account": ""
+}
+```
+* Response
+```JSON
+{
+  "procode": "010000",
+  "response_code": "000",
+  "remarks": "Cash Withdrawal Successful",
+  "reference": "79827162825",
+  "amount": 200,
+  "account_no": "254708003472",
+  "available_bal": 800.5
+}
+```
 
-      ```JSON
-      {
-          "procode": "010000",
-          "response_code": "000",
-          "remarks": "Cash Withdrawal Successful",
-          "reference": "79827162825",
-          "amount": 200,
-          "account_no": "254708003472",
-          "available_bal": 800.5
-      }      
-      ```
+d. Mini-statement Enquiry - processing code `380000`. Amount should be zero and debit account should be the one you want to request a ministatement for.
 
-d. Ministatement Enquiry - processing code 380000
-
-  * Request
-      ```JSON
-
-      {
-      	"msg_type":"0200",
-      	"pro_code":"380000",
-      	"channel":"USSD",
-      	"txn_ref":"79827162826",
-      	"amount":"0.00",
-      	"narration":"Ministatement Enquiry",
-      	"debit_account":"254708003472",
-      	"credit_account": ""
-      }      
-      ```
-  * Resposne
-      ```JSON
-      {
-          "procode": "380000",
-          "response_code": "000",
-          "remarks": "Ministatement Enquiry Successful",
-          "reference": "79827162826",
-          "amount": 0,
-          "account_no": "",
-          "available_bal": 0,
-          "Ministatement": [
-              {
-                  "Txn_Date_time": "2020-03-16T00:08:06.430269+03:00",
-                  "Txn_Type": "Cash Withdrawal",
-                  "amount": "200.00",
-                  "dr_cr": "DR"
-              },
-              {
-                  "Txn_Date_time": "2020-03-16T00:07:44.370908+03:00",
-                  "Txn_Type": "Cash Deposit",
-                  "amount": "1000.50",
-                  "dr_cr": "CR"
-              }
-          ]
-      }
- ```
+* Request
+```JSON
+{
+	"msg_type":"0200",
+	"pro_code":"380000",
+	"channel":"USSD",
+	"txn_ref":"79827162826",
+	"amount":"0.00",
+	"narration":"Ministatement Enquiry",
+	"debit_account":"254708003472",
+	"credit_account": ""
+}
+```
+* Response
+```JSON
+{
+  "procode": "380000",
+  "response_code": "000",
+  "remarks": "Ministatement Enquiry Successful",
+  "reference": "79827162826",
+  "amount": 0,
+  "account_no": "",
+  "available_bal": 0,
+  "Ministatement": [
+	  {
+		  "Txn_Date_time": "2020-03-16T00:08:06.430269+03:00",
+		  "Txn_Type": "Cash Withdrawal",
+		  "amount": "200.00",
+		  "dr_cr": "DR"
+	  },
+	  {
+		  "Txn_Date_time": "2020-03-16T00:07:44.370908+03:00",
+		  "Txn_Type": "Cash Deposit",
+		  "amount": "1000.50",
+		  "dr_cr": "CR"
+	  }
+  ]
+}
+```
 
 
 ## Unit Tests
