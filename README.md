@@ -198,7 +198,7 @@ API_PORT=8083
 ```
 
 ###### 8. POST - [/transactions]() - processes all transaction related requests. The transaction type is identified by the value of the supplied processing code in the request.
-a. Balance Enquiry - processing code `310000`.
+a. Balance Enquiry - processing code `310000`. debit account should be the account you want to request balance for.
 
 * Request
 ```JSON
@@ -282,7 +282,7 @@ c. Cash withdrawal - processing code `010000`. Credit account here is the cash a
 }
 ```
 
-d. Mini-statement Enquiry - processing code `380000`
+d. Mini-statement Enquiry - processing code `380000`. Amount should be zero and debit account should be the one you want to request a ministatement for.
 
 * Request
 ```JSON
@@ -323,6 +323,7 @@ d. Mini-statement Enquiry - processing code `380000`
   ]
 }
 ```
+
 
 ## Unit Tests
 
