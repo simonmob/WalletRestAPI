@@ -56,8 +56,8 @@ API_PORT=8083
 * Request
 ```JSON
 {
-	"channel": "USSD",
-	"description":"USSD channel"
+	"channel": "MOBILE",
+	"description":"MOBILE channel"
 }
 ```
 * Response
