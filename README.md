@@ -31,7 +31,7 @@ DB_PORT=5439 #User defined - The Default postgres port is 5432
 3. Set the CashAccount and api port values in the config
 ```ENV
 #cash account
-CASH_ACCOUNT=254712345678
+CASH_ACCOUNT=111111111111
 #api port
 API_PORT=8083
 ```
@@ -111,14 +111,14 @@ API_PORT=8083
 }
 ```
 
-###### 4. POST - [/customers/create]() - creates a new customer. A call to this end point opens an account for the customer. Note the account should be a Phone Number format starting with 254xxxxxxxxx. New accounts in accounts table will have a balance of 0.00.
+###### 4. POST - [/customers/create]() - creates a new customer. A call to this end point opens an account for the customer. Note the account should be a Phone Number format starting with 254xxxxxxxxx.(for tests im using 111,222 and 333 prefix. New accounts in accounts table will have a balance of 0.00.
 * Request
 ```JSON
 {
 	"firstname":"Simon",
 	"lastname":"Maingi",
 	"email":"kmaing.simon@gmail.com",
-	"account_no":"254708003472"
+	"account_no":"222222222222"
 }
 ```
 * Response
@@ -128,7 +128,7 @@ API_PORT=8083
     "firstname": "Simon",
     "lastname": "Maingi",
     "email": "kmaing.simon@gmail.com",
-    "account_no": "254708003472",
+    "account_no": "222222222222",
     "created_at": "2020-03-15T18:37:32.683894+03:00",
     "updated_at": "2020-03-15T18:37:32.683894+03:00"
 }
@@ -143,7 +143,7 @@ API_PORT=8083
         "firstname": "Simon",
         "lastname": "Maingi",
         "email": "kmaing.simon@gmail.com",
-        "account_no": "254708003472",
+        "account_no": "222222222222",
         "created_at": "2020-03-15T18:53:58.069803+03:00",
         "updated_at": "2020-03-15T18:53:58.069803+03:00"
     },
@@ -152,7 +152,7 @@ API_PORT=8083
         "firstname": "John",
         "lastname": "Mwangi",
         "email": "mwangi@gmail.com",
-        "account_no": "254712345678",
+        "account_no": "111111111111",
         "created_at": "2020-03-15T18:55:38.742371+03:00",
         "updated_at": "2020-03-15T18:55:38.742371+03:00"
     }
@@ -160,7 +160,7 @@ API_PORT=8083
 ```
 
 ###### 6. GET-[/customers/get/{accountno}]() - Get customer details of the given account number. No request Body
-* Get - [/customers/get/254708003472]()
+* Get - [/customers/get/222222222222]()
 * Resposne
 ```JSON
 {
@@ -168,7 +168,7 @@ API_PORT=8083
     "firstname": "Simon",
     "lastname": "Maingi",
     "email": "kmaing.simon@gmail.com",
-    "account_no": "254708003472",
+    "account_no": "222222222222",
     "created_at": "2020-03-15T18:53:58.069803+03:00",
     "updated_at": "2020-03-15T18:53:58.069803+03:00"
 }
@@ -181,7 +181,7 @@ API_PORT=8083
 	"firstname":"John",
 	"lastname":"Kamau",
 	"email":"kamau.john@gmail.com",
-	"account_no":"254712345678"
+	"account_no":"111111111111"
 }
 ```
 * Resposne
@@ -191,7 +191,7 @@ API_PORT=8083
     "firstname": "John",
     "lastname": "Kamau",
     "email": "kamau.john@gmail.com",
-    "account_no": "254712345678",
+    "account_no": "111111111111",
     "created_at": "2020-03-15T18:55:38.742371+03:00",
     "updated_at": "2020-03-15T19:28:55.931394+03:00"
 }
@@ -209,7 +209,7 @@ a. Balance Enquiry - processing code `310000`. debit account should be the accou
   "txn_ref":"79827162829",
   "amount":"0.00",
   "narration":"Balance Enquiry",
-  "debit_account":"254708003472",
+  "debit_account":"222222222222",
   "credit_account": ""
 }
 ```
@@ -221,12 +221,12 @@ a. Balance Enquiry - processing code `310000`. debit account should be the accou
   "remarks": "Balance Enquiry Successful",
   "reference": "79827162829",
   "amount": 0,
-  "account_no": "254708003472",
+  "account_no": "222222222222",
   "available_bal": 0
 }
 ```
 
-b. Cash Deposit - processing code `210000`. The cash account(254712345678) is used as the Debit account in this case.
+b. Cash Deposit - processing code `210000`. The cash account(111111111111) is used as the Debit account in this case.
 
 * Request
 ```JSON
@@ -237,8 +237,8 @@ b. Cash Deposit - processing code `210000`. The cash account(254712345678) is us
   "txn_ref":"79827162824",
   "amount":"1000.50",
   "narration":"Cash Deposit",
-  "debit_account":"254708003472",
-  "credit_account": "254708003472"
+  "debit_account":"1111111111111",
+  "credit_account": "222222222222"
 }      
 ```
 * Response
@@ -249,12 +249,12 @@ b. Cash Deposit - processing code `210000`. The cash account(254712345678) is us
   "remarks": "Cash Deposit Successful",
   "reference": "79827162824",
   "amount": 1000.5,
-  "account_no": "254708003472",
+  "account_no": "2222222222222",
   "available_bal": 1000.5
 }
 ```
 
-c. Cash withdrawal - processing code `010000`. Credit account here is the cash account (`254712345678`).
+c. Cash withdrawal - processing code `010000`. Credit account here is the cash account (`111111111111`).
 
 * Request
 ```JSON
@@ -265,7 +265,7 @@ c. Cash withdrawal - processing code `010000`. Credit account here is the cash a
 	"txn_ref":"79827162825",
 	"amount":"200",
 	"narration":"Cash Withdrawal",
-	"debit_account":"254708003472",
+	"debit_account":"222222222222",
 	"credit_account": ""
 }
 ```
@@ -277,7 +277,7 @@ c. Cash withdrawal - processing code `010000`. Credit account here is the cash a
   "remarks": "Cash Withdrawal Successful",
   "reference": "79827162825",
   "amount": 200,
-  "account_no": "254708003472",
+  "account_no": "222222222222",
   "available_bal": 800.5
 }
 ```
@@ -293,7 +293,7 @@ d. Mini-statement Enquiry - processing code `380000`. Amount should be zero and 
 	"txn_ref":"79827162826",
 	"amount":"0.00",
 	"narration":"Ministatement Enquiry",
-	"debit_account":"254708003472",
+	"debit_account":"222222222222",
 	"credit_account": ""
 }
 ```
@@ -377,7 +377,7 @@ ID:        2,
 FirstName: "Simon",
 LastName:  "Maingi",
 Email:     "simon@gmail.com",
-AccountNo: "254708003472",
+AccountNo: "222222222222",
 ```
 Assertions
 - Check if returned `ID,FirstName,LastName and AccountNo` are the same as the given test Data
@@ -412,7 +412,7 @@ ID:        1,
 FirstName: "Kamau",
 LastName:  "John",
 Email:     "John@gmail.com",
-AccountNo: "254712377789",
+AccountNo: "	333333333333",
 ```
 Assertions
 - Check if returned updated `ID,FirstName,LastName and AccountNo` are the same as the given update test Data.
@@ -471,14 +471,14 @@ Test Data.
 ```js
 {
   name:         "CreateCustomer_Success",
-  inputJSON:    `{"firstname":"Simon","lastname":"Maingi","email":"kmaing.simon@gmail.com","account_no":"254708003472"}`,
+  inputJSON:    `{"firstname":"Simon","lastname":"Maingi","email":"kmaing.simon@gmail.com","account_no":"22222222222"}`,
   statusCode:   201,
   tokenGiven:   tokenString,
   errorMessage: "",
 },
 {
   name:         "CreateCustomer_Fail",
-  inputJSON:    `{"firstname":"Simon","lastname":"Maingi","email":"kmaing.simon@gmail.com","account_no":"254708003472"}`,
+  inputJSON:    `{"firstname":"Simon","lastname":"Maingi","email":"kmaing.simon@gmail.com","account_no":"222222222222"}`,
   statusCode:   401,
   tokenGiven:   "wrong token",
   errorMessage: "Unauthorized",
@@ -489,7 +489,7 @@ Assertions
 ```js
 assert.Equal(t, w.Code, tt.statusCode)
 if tt.statusCode == 201 {
-  assert.Equal(t, responseMap["account_no"], "254708003472")
+  assert.Equal(t, responseMap["account_no"], "222222222222")
 }
 ```
 - Check if channel is authorized to do customer creation. If stat
@@ -507,7 +507,7 @@ if tt.statusCode == 201 {
  ```js
  {
    name:         "TestSuccesfulBalance",
-   inputJSON:    `{"msg_type":"0200","pro_code":"310000","channel":"USSD","txn_ref":"79827162829","amount":"0.00","narration":"Balance Enquiry","debit_account":"254708003472","credit_account": ""}`,
+   inputJSON:    `{"msg_type":"0200","pro_code":"310000","channel":"USSD","txn_ref":"79827162829","amount":"0.00","narration":"Balance Enquiry","debit_account":"222222222222","credit_account": ""}`,
    statusCode:   200,
    tokenGiven:   tokenString,
    ResponseCode: "000",
@@ -515,14 +515,14 @@ if tt.statusCode == 201 {
  },
  {
    name:         "TestUnauthorizedTransaction",
-   inputJSON:    `{"msg_type":"0200","pro_code":"310000","channel":"USSD","txn_ref":"79827162830","amount":"0.00","narration":"Balance Enquiry","debit_account":"254708003472","credit_account": ""}`,
+   inputJSON:    `{"msg_type":"0200","pro_code":"310000","channel":"USSD","txn_ref":"79827162830","amount":"0.00","narration":"Balance Enquiry","debit_account":"222222222222","credit_account": ""}`,
    statusCode:   401,
    tokenGiven:   "wrong token",
    errorMessage: "Unauthorized",
  },
  {
    name:         "TestInsufficientBalance",
-   inputJSON:    `{"msg_type":"0200","pro_code":"010000","channel":"USSD","txn_ref":"79827162824","amount":"110000.00","narration":"Cash Withdrawal","debit_account":"254708003472","credit_account": "254712345678"}`,
+   inputJSON:    `{"msg_type":"0200","pro_code":"010000","channel":"USSD","txn_ref":"79827162824","amount":"110000.00","narration":"Cash Withdrawal","debit_account":"2222222222222","credit_account": "111111111111"}`,
    statusCode:   200,
    tokenGiven:   tokenString,
    ResponseCode: "020",
@@ -530,7 +530,7 @@ if tt.statusCode == 201 {
  },
  {
    name:         "TestSuccessfulCashWithdrawal",
-   inputJSON:    `{"msg_type":"0200","pro_code":"010000","channel":"USSD","txn_ref":"79827162825","amount":"200.00","narration":"Cash Withdrawal","debit_account":"254708003472","credit_account": "254712345678"}`,
+   inputJSON:    `{"msg_type":"0200","pro_code":"010000","channel":"USSD","txn_ref":"79827162825","amount":"200.00","narration":"Cash Withdrawal","debit_account":"222222222222","credit_account": "111111111111"}`,
    statusCode:   200,
    tokenGiven:   tokenString,
    ResponseCode: "000",
@@ -538,7 +538,7 @@ if tt.statusCode == 201 {
  },
  {
    name:         "TestSuccessfulCashDeposit",
-   inputJSON:    `{"msg_type":"0200","pro_code":"210000","channel":"USSD","txn_ref":"79827162826","amount":"300.00","narration":"Cash Deposit","debit_account":"254712345678","credit_account": "254708003472"}`,
+   inputJSON:    `{"msg_type":"0200","pro_code":"210000","channel":"USSD","txn_ref":"79827162826","amount":"300.00","narration":"Cash Deposit","debit_account":"111111111111","credit_account": "222222222222"}`,
    statusCode:   200,
    tokenGiven:   tokenString,
    ResponseCode: "000",
@@ -546,7 +546,7 @@ if tt.statusCode == 201 {
  },
  {
    name:         "TestSuccessfulMinistatement",
-   inputJSON:    `{"msg_type":"0200","pro_code":"380000","channel":"USSD","txn_ref":"79827162827","amount":"300.00","narration":"Cash Deposit","debit_account":"254708003472","credit_account": "254708003472"}`,
+   inputJSON:    `{"msg_type":"0200","pro_code":"380000","channel":"USSD","txn_ref":"79827162827","amount":"300.00","narration":"Cash Deposit","debit_account":"222222222222","credit_account": "222222222222"}`,
    statusCode:   200,
    tokenGiven:   tokenString,
    ResponseCode: "000",
